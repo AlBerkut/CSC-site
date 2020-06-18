@@ -2,20 +2,7 @@
 
 ### !ACHTUNG!
 WordPress работает без proxy_pass в Nginx.
-Nginx конфликтует с Apache установленным в стеке LAMP вместе с WordPress.
-При обратном проксировании слетают все стили и скрипты WordPress.
-Сейчас WordPress запускается на 80 порту.
-
-UPD: Чтобы исправить эту проблему нужно убрать Apache и использовать php-fpm.
-
-Чтобы это изменить, нужно прописать свой порт в docker-compose.yml
-```
-services:
-  wordpress:
-    ...
-    ports:
-      - "80:80" # <-- Тут пишем порт который нам нужен. Example: "8080:80"
-```
+UPD: Чтобы исправить эту проблему нужно убрать Apache.
 
 ##### Installation
 1. Клонировать репозиторий на хост.
@@ -24,3 +11,14 @@ services:
 4. Запустить ```docker-compose up -d``` 
 5. В браузере перейти на IP адресс хоста и настроить WordPress.
 
+####### Issues
+```
+Connection Information
+To perform the requested action, WordPress needs to access your web server.
+Please enter your FTP credentials to proceed. 
+If you do not remember your credentials, you should contact your web host.
+```
+Fix:
+```
+chown -Rf www-data.www-data /var/www/html/
+```
